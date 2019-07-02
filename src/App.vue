@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    dasd
     <!-- <img src="./assets/logo.png"> -->
     <!-- <router-view/> -->
     <navbar/>
