@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    dasd
     <!-- <img src="./assets/logo.png"> -->
     <!-- <router-view/> -->
     <navbar/>
@@ -44,6 +43,7 @@ html, body, #app {
 #app {
   display: flex;
   flex-direction: column;
+  background-color: beige
 }
 .container {
   flex-grow: 1;
