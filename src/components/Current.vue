@@ -14,6 +14,13 @@
 </template>
 
 <script>
+import api from '../api/api'
+// axios.get('http://api.openweathermap.org/data/2.5/weather?q=Chuncheon&appid=c102a437a9d8f986c74e57cd6a2dbce1').then(function(res){
+//        console.log(res)
+//       })
+
+
+
  // const apiURI = "http://api.openweathermap.org/data/2.5/weather?q=Chuncheon&appid=c102a437a9d8f986c74e57cd6a2dbce1";
       //   $.ajax({
       //       url: apiURI,
@@ -48,7 +55,11 @@
       //       }
       //   })
 export default {
-  
+  methods : {
+    test(){
+      api.test()
+    }
+  }
 }
 </script>
 
