@@ -1,12 +1,13 @@
 <template>
   <div class="cur_wrap">
     <h1 class="cur_tit">{{curData.name}}</h1>
-    <h2 class="cur_weather">{{curData.weather[0].main}}</h2>
+    <h2 class="cur_weather">{{foo}}</h2>
     <figure class="weather_icon">
       <i :class="icon"></i>
     </figure>
-    <h1 class="cur_temp">{{Math.floor(curData.main.temp) - 272}}℃</h1>
-    <p><span>최고 {{Math.floor(curData.main.temp_max - 272)}}℃</span> / <span>최저 {{Math.floor(curData.main.temp_min) - 272}}℃</span></p>
+ 
+    <!-- <h1 class="cur_temp">{{Math.floor(curData.main.temp) - 272}}℃</h1> -->
+    <!-- <p><span>최고 {{Math.floor(curData.main.temp_max - 272)}}℃</span> / <span>최저 {{Math.floor(curData.main.temp_min) - 272}}℃</span></p> -->
     <div>
       <p>도시이름 : <span id="cityName">{{curData.name}}</span></p>
       <!-- <p>현재온도 : <span id="curTemp">{{Math.floor(curData.main.temp) - 272}}</span></p> -->
@@ -26,20 +27,39 @@ export default {
   data() {
     return {
       curData : [],
-      icon : ''
+      icon : '',
+      arr : []
     }
   },
   created(){
-    axios.get('https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=c102a437a9d8f986c74e57cd6a2dbce1')
+    this.bar()
+    this.$http.get('https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=c102a437a9d8f986c74e57cd6a2dbce1')
       .then((response) => {
         this.curData = response.data
-        console.log(response.data)
+        
         if(this.curData.weather[0].main == 'Haze'){ 
           this.icon = 'fas fa-smog'
         } 
       })
       .catch(() => {console.log('weather error')})
-      .finally(() => {console.log('weather')})
+    
+  },
+  methods : {
+      bar : async function() {
+        const {data} = await this.$http.get('https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=c102a437a9d8f986c74e57cd6a2dbce1');
+        this.arr = data
+      }
+  },
+  computed : {
+    foo() {
+      //  console.log(this.curData.main)
+      if(this.curData.weather !== undefined) {
+        return this.curData.weather[0].main
+
+      }
+      
+        
+    }
   },
   mounted() {
   }
