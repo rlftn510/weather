@@ -39,7 +39,11 @@ export default {
         
         if(this.curData.weather[0].main == 'Haze'){ 
           this.icon = 'fas fa-smog'
+        }
+        if(this.curData.weather[0].main == 'Clouds'){ 
+          this.icon = 'fas fa-cloud'
         } 
+        
       })
       .catch(() => {console.log('weather error')})
     
@@ -54,6 +58,7 @@ export default {
     foo() {
       //  console.log(this.curData.main)
       if(this.curData.weather !== undefined) {
+        
         return this.curData.weather[0].main
 
       }
