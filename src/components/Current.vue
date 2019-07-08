@@ -1,22 +1,13 @@
 <template>
   <div class="cur_wrap">
-    <h1 class="cur_tit">{{curData.name}}</h1>
-    <h2 class="cur_weather">{{foo}}</h2>
+    <h1 class="cur_tit">{{arr.name}}</h1>
+    <h2 class="cur_weather">{{weather}}</h2>
     <figure class="weather_icon">
       <i :class="icon"></i>
     </figure>
  
-    <!-- <h1 class="cur_temp">{{Math.floor(curData.main.temp) - 272}}℃</h1> -->
-    <!-- <p><span>최고 {{Math.floor(curData.main.temp_max - 272)}}℃</span> / <span>최저 {{Math.floor(curData.main.temp_min) - 272}}℃</span></p> -->
-    <div>
-      <p>도시이름 : <span id="cityName">{{curData.name}}</span></p>
-      <!-- <p>현재온도 : <span id="curTemp">{{Math.floor(curData.main.temp) - 272}}</span></p> -->
-      <p>현재습도 : <span id="curWet"></span></p>
-      <!-- <p>현재날씨 : <span id="curWeather">{{curData.weather[0].main}}</span></p> -->
-      <p>날씨상세설명 : <span id="detailWeather"></span></p>
-      <p>날씨 이미지 : <img src="" alt="날씨" id="weatherIcon"></p>
-      <p>구름 : <span id="curCloud"></span></p>
-    </div>
+    <h1 class="cur_temp">{{curTemp}}℃</h1>
+    <p><span>최고 {{curTempMax}}℃</span> / <span>최저 {{curTempMin}}℃</span></p>
   </div>
 </template>
 
@@ -55,15 +46,25 @@ export default {
       }
   },
   computed : {
-    foo() {
-      //  console.log(this.curData.main)
+    weather() {
       if(this.curData.weather !== undefined) {
-        
         return this.curData.weather[0].main
-
       }
-      
-        
+    },
+    curTemp() {
+      if(this.curData.main !== undefined) {
+        return Math.floor(this.curData.main.temp - 272)
+      }
+    },
+    curTempMin() {
+      if(this.curData.main !== undefined) {
+        return Math.floor(this.curData.main.temp_min - 272)
+      }
+    },
+    curTempMax() {
+      if(this.curData.main !== undefined) {
+        return Math.floor(this.curData.main.temp_max - 272)
+      }
     }
   },
   mounted() {

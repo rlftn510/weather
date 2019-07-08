@@ -5,7 +5,7 @@
     <navbar/>
     <current/>
     <future/>
-    <test/>
+    <!-- <test/> -->
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 import Navbar from './components/Navbar'
 import Current from './components/Current'
 import Future from './components/Future'
-import test from './components/test'
+// import test from './components/test'
 
 
 
@@ -32,7 +32,7 @@ export default {
     Navbar,
     Current,
     Future,
-    test
+    // test
   }
 }
 
