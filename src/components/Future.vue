@@ -1,23 +1,22 @@
 <template>
   <div class="future_warp">
-    미래
+    <!-- 미래 -->
     {{weekDay}}
     <div>
       <!-- <h2>{{result}}</h2> -->
-      <a href="" @click.prevent="addSetter">click</a>
+      <a href="" @click.prevent="">click</a>
       <ul>
-        <!-- <li v-for="(item, idx) in arr" v-bind:key="idx"> -->
-          <!-- {{item.dt_txt}} -->
-          <!-- <p>0시</p>
-          <span>맑음</span>
-          <span>30℃</span> -->
-        <!-- </li> -->
-        <!-- <li>
-          <p>3시</p>
-          <span>맑음</span>
-          <span>30℃</span>
-        </li> -->
+        <li v-for="(item, idx) in arr" v-bind:key="idx">
+          <p></p>
+          <p>{{item.main.temp}}</p>
+          <span>{{item.dt_txt}}</span>
+        </li>
       </ul>
+      <div v-for="(item, idx) in arr2" :key="idx">
+        <p>{{item.main.temp}}</p>
+        <span>{{item.dt_txt}}</span>
+        <p></p>
+      </div>
     </div>
   </div>
 </template>
@@ -27,11 +26,30 @@ export default {
   data (){
     return {
       arr : '',
-      arr2 : ''
+      arr2 : [],
+      arr3 : '',
+      arr4 : '',
+      result : '',
+      futureArr : ''
     }
   },
   created(){
     this.forcastApi()
+      .then(() => {
+        console.log(this.arr)
+        this.arr.forEach((el, idx) => {
+          console.log(el,idx)
+            if(idx < 5){
+            this.arr2.push(el)
+          }
+        })
+        console.log(this.arr2)
+        // const day = el.dt_txt.split(' ')[0]
+        // console.log(day)
+        // if(day === '2019-07-09') {
+          // this.arr2.push(el)
+        // }
+      })
   },
   methods: {
     forcastApi : async function() {
@@ -42,23 +60,34 @@ export default {
         // const day = this.arr.list[0].dt_txt.split(' ')[0]
         // console.log(week[new Date(day).getDay()])
     },
+    slideDay(){
+      for (let index = 0; index < this.arr.length; index++) {
+          console.log(this.arr[index])
+          if(index < 5){
+            this.arr2.push(this.arr[index])
+          }
+        }
+    },
     addSetter(){
-      // this.weekDay = "2"
+      this.forcastApi().then(()=> {
+        this.weekDay = "1"
+      })
+      
     }
   },
   computed : {
     weekDay : {
       get(){
-        return this.arr2 = result
+        // return console.log(this.result)
       },
-      set(){
+      set(num){
         if(this.arr.list !== undefined){
-          const week = ['일','월','화','수','목','금',]
-          // const num = Number(num)
-          const day = this.arr.list[0].dt_txt.split(' ')[0]
+          var week = ['일','월','화','수','목','금',]
+          var nums = Number(num)
+          var day = this.arr.list[nums].dt_txt.split(' ')[0]
           // console.log(week[new Date(day).getDay()])
           // return week[new Date(day).getDay()]
-          const result = week[new Date(day).getDay()]
+          this.result = week[new Date(day).getDay()]
         }
       }
     }
