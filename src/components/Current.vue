@@ -1,11 +1,13 @@
 <template>
   <div class="cur_wrap">
-    <h1 class="cur_tit">{{arr.name}}</h1>
-    <h2 class="cur_weather">{{weather}}</h2>
-    <figure class="weather_icon">
-      <i :class="icon"></i>
-    </figure>
- 
+    <h2 class="cur_tit">{{arr.name}}</h2>
+    
+    
+      <p><img v-bind:src="'http://openweathermap.org/img/w/'+arr.weather[0].icon+'.png'"></p>
+      
+      <!-- <i :class="icon"></i> -->
+    
+    <p class="cur_weather">{{weather}}</p>
     <h1 class="cur_temp">{{curTemp}}℃</h1>
     <p><span>최고 {{curTempMax}}℃</span> / <span>최저 {{curTempMin}}℃</span></p>
   </div>

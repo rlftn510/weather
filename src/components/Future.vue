@@ -1,21 +1,21 @@
 <template>
-  <div class="future_warp">
+  <div class="future_wrap">
     <!-- 미래 -->
-    <div>
-      <h2>오늘({{today[0].weekInfo}})</h2>
-      <ul>
+    <div class="future_section">
+      <h2 class="tit">오늘({{today[0].weekInfo}})</h2>
+      <ul class="weather_time_list">
         <li v-for="(item, idx) in today" v-bind:key="idx">
-          <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
+          <p class="time">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</p>
           <!-- <span class="day1">{{item.times}} 시</span> -->
-          <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
-          <p>{{item.weather[0].main}}</p>
-          <p>{{Math.floor(item.main.temp - 272)}}℃</p>
+          <figure><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></figure>
+          <p class="weather">{{item.weather[0].main}}</p>
+          <p class="temp">{{Math.floor(item.main.temp - 272)}}℃</p>
         </li>
       </ul>
     </div>
-    <div>
-      <h2>내일({{tomorrow[0].weekInfo}})</h2>
-      <ul>
+    <div class="future_section">
+      <h2 class="tit">내일({{tomorrow[0].weekInfo}})</h2>
+      <ul class="weather_time_list">
         <li v-for="(item, idx) in tomorrow" v-bind:key="idx">
           <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
           <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
@@ -24,9 +24,9 @@
         </li>
       </ul>
     </div>
-    <div>
+    <div class="future_section">
       <h2>모레({{ttomorrow[0].weekInfo}})</h2>
-      <ul>
+      <ul class="weather_time_list">
         <li v-for="(item, idx) in ttomorrow" v-bind:key="idx">
           <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
           <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
@@ -148,5 +148,8 @@ export default {
 </script>
 
 <style>
-
+  .future_wrap{background-color:burlywood;text-align: center}
+  .future_section h2{font-size:18px;font-weight:600;background-color: rgb(240, 225, 158)}
+  .weather_time_list{overflow: hidden;display: inline-block;}
+  .weather_time_list li{float: left;}
 </style>
