@@ -1,23 +1,42 @@
 <template>
   <div class="future_warp">
     <!-- 미래 -->
-    {{weekDay}}
     <div>
-      <!-- <h2>{{result}}</h2> -->
-      <a href="" @click.prevent="">click</a>
+      <h2>오늘</h2>
       <ul>
-        <li v-for="(item, idx) in arr" v-bind:key="idx">
-          <p></p>
+        <li v-for="(item, idx) in today" v-bind:key="idx">
+          <p>{{item.weather[0].main}}</p>
           <p>{{item.main.temp}}</p>
           <span>{{item.dt_txt}}</span>
         </li>
       </ul>
-      <div v-for="(item, idx) in arr2" :key="idx">
+    </div>
+    <div>
+      <h2>내일(week)</h2>
+      <ul>
+        <li v-for="(item, idx) in tomorrow" v-bind:key="idx">
+          <p>{{item.weather[0].main}}</p>
+          <p>{{item.main.temp}}</p>
+          <span>{{item.dt_txt}}</span>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2>모레(week)</h2>
+      <ul>
+        <li v-for="(item, idx) in ttomorrow" v-bind:key="idx">
+          <p>{{item.weather[0].main}}</p>
+          <p>{{item.main.temp}}</p>
+          <span>{{item.dt_txt}}</span>
+        </li>
+      </ul>
+    </div>
+
+      <!-- <div v-for="(item, idx) in arr2" :key="idx">
         <p>{{item.main.temp}}</p>
         <span>{{item.dt_txt}}</span>
         <p></p>
-      </div>
-    </div>
+      </div> -->
   </div>
 </template>
 
@@ -26,29 +45,22 @@ export default {
   data (){
     return {
       arr : '',
-      arr2 : [],
-      arr3 : '',
-      arr4 : '',
       result : '',
-      futureArr : ''
+      today : [],
+      tomorrow : [],
+      ttomorrow : [],
+      tttomorrow : []
     }
   },
   created(){
     this.forcastApi()
       .then(() => {
         console.log(this.arr)
-        this.arr.forEach((el, idx) => {
-          console.log(el,idx)
-            if(idx < 5){
-            this.arr2.push(el)
-          }
-        })
-        console.log(this.arr2)
-        // const day = el.dt_txt.split(' ')[0]
-        // console.log(day)
-        // if(day === '2019-07-09') {
-          // this.arr2.push(el)
-        // }
+        this.slideDay()
+        console.log(this.today)
+        console.log(this.tomorrow)
+        console.log(this.ttomorrow)
+        console.log(this.tttomorrow)
       })
   },
   methods: {
@@ -61,12 +73,28 @@ export default {
         // console.log(week[new Date(day).getDay()])
     },
     slideDay(){
-      for (let index = 0; index < this.arr.length; index++) {
-          console.log(this.arr[index])
-          if(index < 5){
-            this.arr2.push(this.arr[index])
+      const today = new Date().getDate()
+      const tomorrow = today + 1
+      const ttomorrow = tomorrow + 1
+      const tttomorrow = ttomorrow + 1
+      console.log(today)
+      console.log(tomorrow)
+      console.log(ttomorrow)
+      console.log(tttomorrow)
+      this.arr.forEach((el, idx) => {
+          const day = new Date(el.dt_txt.split(' ')[0]).getDate()
+          console.log(day)
+          if(day === today){
+            this.today.push(el)
+          } else if (day == tomorrow){
+            this.tomorrow.push(el)
+          } else if (day == ttomorrow){
+            this.ttomorrow.push(el)
+          } else if (day == tttomorrow){
+            this.tttomorrow.push(el)
           }
-        }
+        })
+        
     },
     addSetter(){
       this.forcastApi().then(()=> {
