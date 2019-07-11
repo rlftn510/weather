@@ -39,14 +39,14 @@ export default {
 </script>
 
 <style>
+*{box-sizing: border-box;list-style: none;padding:0;margin:0}
 html, body, #app {
-  height: 100%;
   margin: 0px;
 }
 #app {
   display: flex;
   flex-direction: column;
-  background-color: beige
+  background-color: beige;
 }
 .container {
   flex-grow: 1;
