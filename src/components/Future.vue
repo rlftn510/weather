@@ -2,9 +2,9 @@
   <div class="future_wrap">
     <!-- 미래 -->
     <div class="future_section">
-      <h2 class="tit">오늘({{today[0].weekInfo}})</h2>
+      <h2 class="tit">오늘({{this.$store.state.today[0].weekInfo}})</h2>
       <ul class="weather_time_list">
-        <li v-for="(item, idx) in today" v-bind:key="idx">
+        <li v-for="(item, idx) in this.$store.state.today" v-bind:key="idx">
           <p class="time">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</p>
           <!-- <span class="day1">{{item.times}} 시</span> -->
           <figure><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></figure>
@@ -14,9 +14,9 @@
       </ul>
     </div>
     <div class="future_section">
-      <h2 class="tit">내일({{tomorrow[0].weekInfo}})</h2>
+      <h2 class="tit">내일({{this.$store.state.tomorrow[0].weekInfo}})</h2>
       <ul class="weather_time_list">
-        <li v-for="(item, idx) in tomorrow" v-bind:key="idx">
+        <li v-for="(item, idx) in this.$store.state.tomorrow" v-bind:key="idx">
           <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
           <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
           <p>{{item.weather[0].main}}</p>
@@ -25,9 +25,9 @@
       </ul>
     </div>
     <div class="future_section">
-      <h2>모레({{ttomorrow[0].weekInfo}})</h2>
+      <h2>모레({{this.$store.state.ttomorrow[0].weekInfo}})</h2>
       <ul class="weather_time_list">
-        <li v-for="(item, idx) in ttomorrow" v-bind:key="idx">
+        <li v-for="(item, idx) in this.$store.state.ttomorrow" v-bind:key="idx">
           <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
           <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
           <p>{{item.weather[0].main}}</p>
@@ -42,21 +42,21 @@
 export default {
   data (){
     return {
-      arr : '',
-      result : '',
-      today : [],
-      tomorrow : [],
-      ttomorrow : [],
-      tttomorrow : []
+      // arr : '',
+      // result : '',
+      // today : [],
+      // tomorrow : [],
+      // ttomorrow : [],
+      // tttomorrow : []
     }
   },
   created(){
     this.forcastApi()
       .then(() => {
         this.slideDay()
-        console.log(this.today)
-        console.log(this.tomorrow)
-        console.log(this.ttomorrow)
+        console.log(this.$store.state.today)
+        console.log(this.$store.state.tomorrow)
+        console.log(this.$store.state.ttomorrow)
       })
   },
   mounted(){
@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     forcastApi : async function() {
-        const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q=Seoul&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
-        this.arr = data.list
+        const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+this.$store.state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
+        this.$store.state.arr = data.list
         // console.log(this.arr)
         // const week = ['일','월','화','수','목','금',]
         // const day = this.arr.list[0].dt_txt.split(' ')[0]
@@ -85,35 +85,35 @@ export default {
       console.log(ttomorrow)
       console.log(tttomorrow)
       const week = ['일','월','화','수','목','금','토']
-      this.arr.forEach((el, idx) => {
+      this.$store.state.arr.forEach((el, idx) => {
           let day = el.dt_txt.split(' ')[0]
           let dayInfo = new Date(day).getDate()
           let weekInfo = week[new Date(day).getDay()]
           let times = el.dt_txt.split(' ')[1].split(':')[0]
           // console.log(day)
           if(dayInfo === today){
-            this.today.push(el)
-            this.today[0]['times'] = times
-            this.today[0]['weekInfo'] = weekInfo
+            this.$store.state.today.push(el)
+            this.$store.state.today[0]['times'] = times
+            this.$store.state.today[0]['weekInfo'] = weekInfo
           } else if (dayInfo == tomorrow){
-            this.tomorrow.push(el)
+            this.$store.state.tomorrow.push(el)
             // this.tomorrow[0]['times'] = times
-            this.tomorrow[0]['weekInfo'] = weekInfo
+            this.$store.state.tomorrow[0]['weekInfo'] = weekInfo
           } else if (dayInfo == ttomorrow){
-            this.ttomorrow.push(el)
+            this.$store.state.ttomorrow.push(el)
             // this.ttomorrow[0]['times'] = times
-            this.ttomorrow[0]['weekInfo'] = weekInfo
+            this.$store.state.ttomorrow[0]['weekInfo'] = weekInfo
           } else if (dayInfo == tttomorrow){
-            this.tttomorrow.push(el)
+            this.$store.state.tttomorrow.push(el)
             // this.tttomorrow[0]['times'] = times
-            this.tttomorrow[0]['weekInfo'] = weekInfo
+            this.$store.state.tttomorrow[0]['weekInfo'] = weekInfo
           }
         })
         
     },
     addSetter(){
       this.forcastApi().then(()=> {
-        this.weekDay = "1"
+        this.$store.state.weekDay = "1"
       })
       
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="cur_wrap">
     <a href="" @click.prevent="showModal = true">change city</a>
-    <h2 class="cur_tit">{{arr.name}}</h2>
+    <h2 class="cur_tit">{{this.$store.state.curData.name}}</h2>
     
     
       <!-- <p><img v-bind:src="'http://openweathermap.org/img/w/'+ {{curIcon}} +'.png'"></p> -->
@@ -11,9 +11,9 @@
     <p class="cur_weather">{{weather}}</p>
     <h1 class="cur_temp">{{curTemp}}℃</h1>
     <p><span>최고 {{curTempMax}}℃</span> / <span>최저 {{curTempMin}}℃</span></p>
-    
+
     <Modal v-if="showModal" @close="showModal = false">
-      <h3 slot="header">
+      <h3 slot="header">s
         지역변경
         
       </h3>
@@ -31,16 +31,17 @@
 </template>
 
 <script>
-import Modal from './Modal/Modal'  
+import Modal from './Modal/Modal'
+import {mapState} from 'vuex'
 
 export default {
   data() {
     return {
-      curData : [],
+      // curData : [],
       icon : '',
-      arr : [],
+      // arr : [],
       showModal : false,
-      city : 'chuncheon'
+      // city : 'chuncheon'
     }
   },
   created(){
@@ -61,47 +62,46 @@ export default {
     
   },
   methods : {
-    changeCH(el){
-      this.city = el.target.dataset.city
-      this.bar()
-      console.log(el.target.dataset.city)
-    },
     bar : async function() {
-      const {data} = await this.$http.get('https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=c102a437a9d8f986c74e57cd6a2dbce1');
-      this.arr = data
-      console.log('a')
+      const {data} = await this.$http.get('https://api.openweathermap.org/data/2.5/weather?q='+this.$store.state.city+'&appid=c102a437a9d8f986c74e57cd6a2dbce1');
+      this.$store.state.curData = data
+    },
+    changeCH(el){
+      this.$store.state.city = el.target.dataset.city
+      // this.bar()
+      console.log(el.target.dataset.city)
     },
     closePop(){
       this.showModal = false
     }
   },
+
   computed : {
     weather() {
-      if(this.arr.weather !== undefined) {
-        return this.arr.weather[0].main
+      if(this.$store.state.curData.weather !== undefined) {
+        return this.$store.state.curData.weather[0].main
       }
     },
     curTemp() {
-      if(this.arr.main !== undefined) {
-        return Math.floor(this.arr.main.temp - 272)
+      if(this.$store.state.curData.main !== undefined) {
+        return Math.floor(this.$store.state.curData.main.temp - 272)
       }
     },
     curTempMin() {
-      if(this.arr.main !== undefined) {
-        return Math.floor(this.arr.main.temp_min - 272)
+      if(this.$store.state.curData.main !== undefined) {
+        return Math.floor(this.$store.state.curData.main.temp_min - 272)
       }
     },
     curTempMax() {
-      if(this.arr.main !== undefined) {
-        return Math.floor(this.arr.main.temp_max - 272)
+      if(this.$store.state.curData.main !== undefined) {
+        return Math.floor(this.$store.state.curData.main.temp_max - 272)
       }
     },
-    curIcon(){
-      if(this.arr.weather[0] !== undefined) {
-        return arr.weather[0].icon
-      }
-      
-    }
+    // curIcon(){
+    //   if(this.$store.state.arr.weather[0] !== undefined) {
+    //     return arr.weather[0].icon
+    //   }
+    // }
   },
   components : {
     Modal
