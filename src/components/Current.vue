@@ -13,7 +13,7 @@
     <p><span>최고 {{curTempMax}}℃</span> / <span>최저 {{curTempMin}}℃</span></p>
 
     <Modal v-if="showModal" @close="showModal = false">
-      <h3 slot="header">s
+      <h3 slot="header">
         지역변경
         
       </h3>
@@ -32,7 +32,7 @@
 
 <script>
 import Modal from './Modal/Modal'
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 
 export default {
   data() {
@@ -45,34 +45,31 @@ export default {
     }
   },
   created(){
+    console.log(this.$http)
     this.bar()
-    // this.$http.get('https://api.openweathermap.org/data/2.5/weather?q='+this.city+'&appid=c102a437a9d8f986c74e57cd6a2dbce1')
-    //   .then((response) => {
-    //     this.curData = response.data
-        
-    //     if(this.curData.weather[0].main == 'Haze'){ 
-    //       this.icon = 'fas fa-smog'
-    //     }
-    //     if(this.curData.weather[0].main == 'Clouds'){ 
-    //       this.icon = 'fas fa-cloud'
-    //     } 
-        
-    //   })
-    //   .catch(() => {console.log('weather error')})
-    
   },
   methods : {
     bar : async function() {
       const {data} = await this.$http.get('https://api.openweathermap.org/data/2.5/weather?q='+this.$store.state.city+'&appid=c102a437a9d8f986c74e57cd6a2dbce1');
       this.$store.state.curData = data
     },
+    FUTURE_API(){
+      this.$store.commit('FUTURE_API')
+    },
     changeCH(el){
       this.$store.state.city = el.target.dataset.city
-      // this.bar()
+      this.bar()
+      this.FUTURE_API()
       console.log(el.target.dataset.city)
     },
     closePop(){
       this.showModal = false
+    },
+        increment: function () {
+      this.$store.commit('increment')
+    },
+    decrement: function () {
+      this.$store.commit('decrement')
     }
   },
 

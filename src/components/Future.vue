@@ -64,12 +64,9 @@ export default {
   },
   methods: {
     forcastApi : async function() {
+      console.log(this)
         const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+this.$store.state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
         this.$store.state.arr = data.list
-        // console.log(this.arr)
-        // const week = ['일','월','화','수','목','금',]
-        // const day = this.arr.list[0].dt_txt.split(' ')[0]
-        // console.log(week[new Date(day).getDay()])
     },  
     countDay(item){
       const times = item.dt_txt.split(' ')[1].split(':')[0]
