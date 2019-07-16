@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <!-- <router-view/> -->
     <navbar/>
     <current/>
     <future/>
-    <!-- <test/> -->
   </div>
 </template>
 
@@ -13,7 +10,6 @@
 import Navbar from './components/Navbar'
 import Current from './components/Current'
 import Future from './components/Future'
-// import test from './components/test'
 
 
 
