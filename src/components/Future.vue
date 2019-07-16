@@ -4,7 +4,7 @@
     <div class="future_section">
       <h2 class="tit">오늘({{this.$store.state.today[0].weekInfo}})</h2>
       <ul class="weather_time_list">
-        <li v-for="(item, idx) in this.$store.state.today" v-bind:key="idx">
+        <li v-for="(item, idx) in getToday" v-bind:key="idx">
           <p class="time">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</p>
           <!-- <span class="day1">{{item.times}} 시</span> -->
           <figure><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></figure>
@@ -16,7 +16,7 @@
     <div class="future_section">
       <h2 class="tit">내일({{this.$store.state.tomorrow[0].weekInfo}})</h2>
       <ul class="weather_time_list">
-        <li v-for="(item, idx) in this.$store.state.tomorrow" v-bind:key="idx">
+        <li v-for="(item, idx) in getTomorrow" v-bind:key="idx">
           <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
           <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
           <p>{{item.weather[0].main}}</p>
@@ -62,6 +62,14 @@ export default {
   },
   mounted(){
     
+  },
+  computed : {
+    getToday(){
+      return this.$store.getters.GET_TODAY
+    },
+    getTomorrow(){
+      return this.$store.getters.GET_TOMORROW
+    }
   },
   methods: {
     forcastApi : async function() {
@@ -119,23 +127,6 @@ export default {
       
     }
   },
-  computed : {
-    weekDay : {
-      get(){
-        // return console.log(this.result)
-      },
-      set(num){
-        if(this.arr.list !== undefined){
-          var week = ['일','월','화','수','목','금',]
-          var nums = Number(num)
-          var day = this.arr.list[nums].dt_txt.split(' ')[0]
-          // console.log(week[new Date(day).getDay()])
-          // return week[new Date(day).getDay()]
-          this.result = week[new Date(day).getDay()]
-        }
-      }
-    }
-  }
 }
 </script>
 

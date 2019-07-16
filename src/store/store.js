@@ -15,13 +15,24 @@ export const store = new Vuex.Store({
     ttomorrow : [],
     tttomorrow : [],
   },
+  getters : {
+    GET_TODAY(state){
+      return state.today
+    },
+    GET_TOMORROW(state){
+      return state.tomorrow
+    }
+  },
   mutations: {
+    CITY_CHANGE(){
+      
+    },
     FUTURE_API : async function(state) {
       console.log(this)
       const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
       state.arr = data.list
       state.futureCity = data.city
-      console.log('ddd')
+      console.log('둘')
       console.log(state.arr)
     },
     SLIDE_DAY(state){
@@ -58,6 +69,7 @@ export const store = new Vuex.Store({
             state.tttomorrow[0]['weekInfo'] = weekInfo
           }
         })
+        console.log('셋')
     }
   }
 })

@@ -15,10 +15,9 @@
     <Modal v-if="showModal" @close="showModal = false">
       <h3 slot="header">
         지역변경
-        
       </h3>
       <div slot="body">
-        <a href="" @click.prevent="changeCH" data-city="chuncheon">chuncheon</a>
+        <a href="" @click.prevent="changeCH" data-city="chile">chile</a>
         <a href="" @click.prevent="changeCH" data-city="seoul">seoul</a>
         <a href="" @click.prevent="changeCH" data-city="london">london</a>
       </div>
@@ -60,12 +59,20 @@ export default {
     SLIDE_DAY(){
       this.$store.commit('SLIDE_DAY')
     },
-    changeCH(el){
-      this.$store.state.city = el.target.dataset.city
+    CITY_CHANGE(el){
       console.log(el.target.dataset.city)
+      this.$store.state.city = el.target.dataset.city
+      console.log('하나')
+      // this.$store.commit('CITY_CHANGE')
+    },
+    changeCH(el){
+      console.log(el.target.dataset.city)
+      this.CITY_CHANGE(el)
       this.bar()
       this.FUTURE_API()
-      this.SLIDE_DAY()
+      setTimeout(() => {
+        this.SLIDE_DAY()
+      }, 1000);
     },
     closePop(){
       this.showModal = false
