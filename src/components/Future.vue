@@ -22,6 +22,7 @@
           <p>{{item.weather[0].main}}</p>
           <p>{{Math.floor(item.main.temp - 272)}}℃</p>
         </li>
+        <p>{{this.$store.state.futureCity.name}}</p>
       </ul>
     </div>
     <div class="future_section">
@@ -64,50 +65,53 @@ export default {
   },
   methods: {
     forcastApi : async function() {
-      console.log(this)
         const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+this.$store.state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
         this.$store.state.arr = data.list
-    },  
+        this.$store.state.futureCity = data.city
+        console.log(data)
+    },
     countDay(item){
       const times = item.dt_txt.split(' ')[1].split(':')[0]
       return times
     },
     slideDay(){
-      const today = new Date().getDate()
-      const tomorrow = today + 1
-      const ttomorrow = today + 2
-      const tttomorrow = today + 3
-      console.log(today)
-      console.log(tomorrow)
-      console.log(ttomorrow)
-      console.log(tttomorrow)
-      const week = ['일','월','화','수','목','금','토']
-      this.$store.state.arr.forEach((el, idx) => {
-          let day = el.dt_txt.split(' ')[0]
-          let dayInfo = new Date(day).getDate()
-          let weekInfo = week[new Date(day).getDay()]
-          let times = el.dt_txt.split(' ')[1].split(':')[0]
-          // console.log(day)
-          if(dayInfo === today){
-            this.$store.state.today.push(el)
-            this.$store.state.today[0]['times'] = times
-            this.$store.state.today[0]['weekInfo'] = weekInfo
-          } else if (dayInfo == tomorrow){
-            this.$store.state.tomorrow.push(el)
-            // this.tomorrow[0]['times'] = times
-            this.$store.state.tomorrow[0]['weekInfo'] = weekInfo
-          } else if (dayInfo == ttomorrow){
-            this.$store.state.ttomorrow.push(el)
-            // this.ttomorrow[0]['times'] = times
-            this.$store.state.ttomorrow[0]['weekInfo'] = weekInfo
-          } else if (dayInfo == tttomorrow){
-            this.$store.state.tttomorrow.push(el)
-            // this.tttomorrow[0]['times'] = times
-            this.$store.state.tttomorrow[0]['weekInfo'] = weekInfo
-          }
-        })
-        
+      this.$store.commit('SLIDE_DAY')
     },
+    // slideDay(){
+    //   const today = new Date().getDate()
+    //   const tomorrow = today + 1
+    //   const ttomorrow = today + 2
+    //   const tttomorrow = today + 3
+    //   console.log(today)
+    //   console.log(tomorrow)
+    //   console.log(ttomorrow)
+    //   console.log(tttomorrow)
+    //   const week = ['일','월','화','수','목','금','토']
+    //   this.$store.state.arr.forEach((el, idx) => {
+    //       let day = el.dt_txt.split(' ')[0]
+    //       let dayInfo = new Date(day).getDate()
+    //       let weekInfo = week[new Date(day).getDay()]
+    //       let times = el.dt_txt.split(' ')[1].split(':')[0]
+    //       // console.log(day)
+    //       if(dayInfo === today){
+    //         this.$store.state.today.push(el)
+    //         this.$store.state.today[0]['times'] = times
+    //         this.$store.state.today[0]['weekInfo'] = weekInfo
+    //       } else if (dayInfo == tomorrow){
+    //         this.$store.state.tomorrow.push(el)
+    //         // this.tomorrow[0]['times'] = times
+    //         this.$store.state.tomorrow[0]['weekInfo'] = weekInfo
+    //       } else if (dayInfo == ttomorrow){
+    //         this.$store.state.ttomorrow.push(el)
+    //         // this.ttomorrow[0]['times'] = times
+    //         this.$store.state.ttomorrow[0]['weekInfo'] = weekInfo
+    //       } else if (dayInfo == tttomorrow){
+    //         this.$store.state.tttomorrow.push(el)
+    //         // this.tttomorrow[0]['times'] = times
+    //         this.$store.state.tttomorrow[0]['weekInfo'] = weekInfo
+    //       }
+    //     })
+    // },
     addSetter(){
       this.forcastApi().then(()=> {
         this.$store.state.weekDay = "1"
@@ -131,15 +135,6 @@ export default {
         }
       }
     }
-    // weekDay (){
-      // if(this.arr.list !== undefined){
-      //   const week = ['일','월','화','수','목','금',]
-      //   const num = num
-      //   const day = this.arr.list[0].dt_txt.split(' ')[0]
-      //   console.log(week[new Date(day).getDay()])
-      //   return week[new Date(day).getDay()]
-      // }
-    // }
   }
 }
 </script>

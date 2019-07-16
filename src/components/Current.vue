@@ -20,6 +20,7 @@
       <div slot="body">
         <a href="" @click.prevent="changeCH" data-city="chuncheon">chuncheon</a>
         <a href="" @click.prevent="changeCH" data-city="seoul">seoul</a>
+        <a href="" @click.prevent="changeCH" data-city="london">london</a>
       </div>
       <div slot="footer">
         <i class="fas closeModalBtn fa-times" @click="closePop"></i>
@@ -56,20 +57,18 @@ export default {
     FUTURE_API(){
       this.$store.commit('FUTURE_API')
     },
+    SLIDE_DAY(){
+      this.$store.commit('SLIDE_DAY')
+    },
     changeCH(el){
       this.$store.state.city = el.target.dataset.city
+      console.log(el.target.dataset.city)
       this.bar()
       this.FUTURE_API()
-      console.log(el.target.dataset.city)
+      this.SLIDE_DAY()
     },
     closePop(){
       this.showModal = false
-    },
-        increment: function () {
-      this.$store.commit('increment')
-    },
-    decrement: function () {
-      this.$store.commit('decrement')
     }
   },
 
