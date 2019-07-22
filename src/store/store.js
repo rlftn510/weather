@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import { timingSafeEqual } from 'crypto';
 Vue.config.productionTip = false
 Vue.use(Vuex);
 Vuex.Store.prototype.$http = axios
@@ -15,6 +16,9 @@ export const store = new Vuex.Store({
     ttomorrow : [],
     tttomorrow : [],
   },
+  actions : {
+
+  },
   getters : {
     GET_TODAY(state){
       return state.today
@@ -27,14 +31,25 @@ export const store = new Vuex.Store({
     CITY_CHANGE(){
       
     },
-    FUTURE_API : async function(state) {
-      console.log(this)
-      const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
-      state.arr = data.list
-      state.futureCity = data.city
-      console.log('둘')
-      console.log(state.arr)
+    FUTURE_API(state){
+      return axios.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1').then((res) =>{
+        const data = res
+        state.arr = data.list
+        state.futureCity = data.city
+        console.log('둘')
+      }).then(() => {
+        this.ttt()
+      })
     },
+    // FUTURE_API : async function(state) {
+    //   const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
+      
+    //   state.arr = data.list
+    //   state.futureCity = data.city
+    //   // $store.SLIDE_DAY()
+    //   console.log('둘')
+    //   // console.log($this.SLIDE_DAY())
+    // },
     SLIDE_DAY(state){
       state.today = []
       state.tomorrow = []
@@ -44,10 +59,10 @@ export const store = new Vuex.Store({
       const tomorrow = today + 1
       const ttomorrow = today + 2
       const tttomorrow = today + 3
-      console.log(today)
-      console.log(tomorrow)
-      console.log(ttomorrow)
-      console.log(tttomorrow)
+      // console.log(today)
+      // console.log(tomorrow)
+      // console.log(ttomorrow)
+      // console.log(tttomorrow)
       const week = ['일','월','화','수','목','금','토']
       state.arr.forEach((el, idx) => {
           let day = el.dt_txt.split(' ')[0]
@@ -70,6 +85,9 @@ export const store = new Vuex.Store({
           }
         })
         console.log('셋')
+    },
+    ttt(){
+      console.log('되냐')
     }
   }
 })
