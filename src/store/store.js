@@ -32,13 +32,12 @@ export const store = new Vuex.Store({
       
     },
     FUTURE_API(state){
-      return axios.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1').then((res) =>{
-        const data = res
+        return axios.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1').then((res) =>{
+        const data = res.data
+        console.log(data)
         state.arr = data.list
         state.futureCity = data.city
         console.log('둘')
-      }).then(() => {
-        this.ttt()
       })
     },
     // FUTURE_API : async function(state) {
@@ -85,9 +84,6 @@ export const store = new Vuex.Store({
           }
         })
         console.log('셋')
-    },
-    ttt(){
-      console.log('되냐')
     }
   }
 })

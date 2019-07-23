@@ -70,9 +70,9 @@ export default {
       this.CITY_CHANGE(el)
       this.bar()
       this.FUTURE_API()
-      // setTimeout(() => {
-      // this.SLIDE_DAY()
-      // }, 1000);
+      setTimeout(() => {
+      this.SLIDE_DAY()
+      }, 1000);
     },
     closePop(){
       this.showModal = false
