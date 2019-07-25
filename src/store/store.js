@@ -17,7 +17,12 @@ export const store = new Vuex.Store({
     tttomorrow : [],
   },
   actions : {
-
+    FUTURE_API({commit}, city){
+      return axios.get('http://api.openweathermap.org/data/2.5/forecast?q='+city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1')
+      .then((res) =>{
+      commit('SLIDE_DAY', res.data)
+    })
+  },
   },
   getters : {
     GET_TODAY(state){
@@ -28,18 +33,16 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
-    CITY_CHANGE(){
-      
-    },
-    FUTURE_API(state){
-        return axios.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1').then((res) =>{
-        const data = res.data
-        console.log(data)
-        state.arr = data.list
-        state.futureCity = data.city
-        console.log('둘')
-      })
-    },
+    // FUTURE_APIs(state, context){
+    //     return axios.get('http://api.openweathermap.org/data/2.5/forecast?q='+'london'+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1')
+    //     .then((res) => {
+    //     const data = res.data
+    //     console.log(data)
+    //     state.arr = data.list
+    //     state.futureCity = data.city
+    //     console.log('둘')
+    //   })
+    // },
     // FUTURE_API : async function(state) {
     //   const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
       
@@ -49,7 +52,10 @@ export const store = new Vuex.Store({
     //   console.log('둘')
     //   // console.log($this.SLIDE_DAY())
     // },
-    SLIDE_DAY(state){
+    SLIDE_DAY(state, arr){
+      state.arr = arr.list
+      console.log(state.arr)
+      state.futureCity = arr.city
       state.today = []
       state.tomorrow = []
       state.ttomorrow = []
@@ -58,10 +64,7 @@ export const store = new Vuex.Store({
       const tomorrow = today + 1
       const ttomorrow = today + 2
       const tttomorrow = today + 3
-      // console.log(today)
-      // console.log(tomorrow)
-      // console.log(ttomorrow)
-      // console.log(tttomorrow)
+
       const week = ['일','월','화','수','목','금','토']
       state.arr.forEach((el, idx) => {
           let day = el.dt_txt.split(' ')[0]

@@ -53,11 +53,20 @@ export default {
       const {data} = await this.$http.get('https://api.openweathermap.org/data/2.5/weather?q='+this.$store.state.city+'&appid=c102a437a9d8f986c74e57cd6a2dbce1');
       this.$store.state.curData = data
     },
-    FUTURE_API(){
-      this.$store.commit('FUTURE_API')
-    },
     SLIDE_DAY(){
       this.$store.commit('SLIDE_DAY')
+    },
+    FUTURE_API(el){
+      this.$store.dispatch('FUTURE_API', el.target.dataset.city)
+    },
+    changeCH(el){
+      console.log(el.target.dataset.city)
+      this.CITY_CHANGE(el)
+      this.bar()
+      this.FUTURE_API(el)
+      // setTimeout(() => {
+      // this.SLIDE_DAY()
+      // }, 1000);
     },
     CITY_CHANGE(el){
       console.log(el.target.dataset.city)
@@ -65,15 +74,7 @@ export default {
       console.log('하나')
       // this.$store.commit('CITY_CHANGE')
     },
-    changeCH(el){
-      console.log(el.target.dataset.city)
-      this.CITY_CHANGE(el)
-      this.bar()
-      this.FUTURE_API()
-      setTimeout(() => {
-      this.SLIDE_DAY()
-      }, 1000);
-    },
+    
     closePop(){
       this.showModal = false
     }

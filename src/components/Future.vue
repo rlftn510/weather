@@ -74,7 +74,7 @@ export default {
   methods: {
     forcastApi : async function() {
         const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+this.$store.state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
-        this.$store.state.arr = data.list
+        this.$store.state.arr = data
         this.$store.state.futureCity = data.city
         console.log(data)
     },
@@ -83,7 +83,7 @@ export default {
       return times
     },
     slideDay(){
-      this.$store.commit('SLIDE_DAY')
+      this.$store.commit('SLIDE_DAY', this.$store.state.arr)
     },
     // slideDay(){
     //   const today = new Date().getDate()
