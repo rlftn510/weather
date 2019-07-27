@@ -65,7 +65,6 @@
 }
 .modal-default-button {
   float: right;
-  color:#047dec
 }
 /*
  * The following styles are auto-applied to elements with

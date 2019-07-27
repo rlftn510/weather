@@ -33,28 +33,8 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
-    // FUTURE_APIs(state, context){
-    //     return axios.get('http://api.openweathermap.org/data/2.5/forecast?q='+'london'+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1')
-    //     .then((res) => {
-    //     const data = res.data
-    //     console.log(data)
-    //     state.arr = data.list
-    //     state.futureCity = data.city
-    //     console.log('둘')
-    //   })
-    // },
-    // FUTURE_API : async function(state) {
-    //   const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
-      
-    //   state.arr = data.list
-    //   state.futureCity = data.city
-    //   // $store.SLIDE_DAY()
-    //   console.log('둘')
-    //   // console.log($this.SLIDE_DAY())
-    // },
     SLIDE_DAY(state, arr){
       state.arr = arr.list
-      console.log(state.arr)
       state.futureCity = arr.city
       state.today = []
       state.tomorrow = []
@@ -86,7 +66,6 @@ export const store = new Vuex.Store({
             state.tttomorrow[0]['weekInfo'] = weekInfo
           }
         })
-        console.log('셋')
     }
   }
 })

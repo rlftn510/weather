@@ -52,7 +52,6 @@ export default {
     bar : async function() {
       const {data} = await this.$http.get('https://api.openweathermap.org/data/2.5/weather?q='+this.$store.state.city+'&appid=c102a437a9d8f986c74e57cd6a2dbce1');
       this.$store.state.curData = data
-      console.log(data)
     },
     SLIDE_DAY(){
       this.$store.commit('SLIDE_DAY')
@@ -61,13 +60,11 @@ export default {
       this.$store.dispatch('FUTURE_API', el.target.dataset.city)
     },
     changeCH(el){
-      console.log(el.target.dataset.city)
       this.CITY_CHANGE(el)
       this.bar()
       this.FUTURE_API(el)
     },
     CITY_CHANGE(el){
-      console.log(el.target.dataset.city)
       this.$store.state.city = el.target.dataset.city
     },
     

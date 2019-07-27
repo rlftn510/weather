@@ -7,7 +7,6 @@
         <ul class="weather_time_list">
         <li v-for="(item, idx) in getToday" v-bind:key="idx">
           <p class="time">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</p>
-          <!-- <span class="day1">{{item.times}} 시</span> -->
           <figure><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></figure>
           <p class="weather">{{item.weather[0].main}}</p>
           <p class="temp">{{Math.floor(item.main.temp - 272)}}℃</p>
@@ -25,7 +24,6 @@
           <p>{{item.weather[0].main}}</p>
           <p>{{Math.floor(item.main.temp - 272)}}℃</p>
         </li>
-        <!-- <p>{{this.$store.state.futureCity.name}}</p> -->
       </ul>
       </div>
     </div>
@@ -51,9 +49,6 @@ export default {
     this.forcastApi()
       .then(() => {
         this.slideDay()
-        console.log(this.$store.state.today)
-        console.log(this.$store.state.tomorrow)
-        console.log(this.$store.state.ttomorrow)
       })
   },
   computed : {
@@ -69,7 +64,6 @@ export default {
         const {data} = await this.$http.get('http://api.openweathermap.org/data/2.5/forecast?q='+this.$store.state.city+'&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1');
         this.$store.state.arr = data
         this.$store.state.futureCity = data.city
-        console.log(data)
     },
     countDay(item){
       const times = item.dt_txt.split(' ')[1].split(':')[0]
