@@ -13,15 +13,6 @@ import Future from './components/Future'
 
 
 
-
-  // axios.get('http://api.openweathermap.org/data/2.5/forecast?q=Seoul&lang=zh_cn&APPID=c102a437a9d8f986c74e57cd6a2dbce1')
-  // .then(function (response) {
-  //   console.log(response);
-  // })
-  // .catch(() => {return console.log('error')})
-  // .finally(() => {console.log('forecast')})
-
-
 export default {
   name: 'App',
   components : {
@@ -38,11 +29,12 @@ export default {
 *{box-sizing: border-box;list-style: none;padding:0;margin:0}
 html, body, #app {
   margin: 0px;
+  background-color: #047dec
 }
 #app {
   display: flex;
   flex-direction: column;
-  background-color: beige;
+  background-color: #047dec;
 }
 .container {
   flex-grow: 1;

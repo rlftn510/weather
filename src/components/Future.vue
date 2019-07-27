@@ -3,7 +3,8 @@
     <!-- 미래 -->
     <div class="future_section">
       <h2 class="tit">오늘({{this.$store.state.today[0].weekInfo}})</h2>
-      <ul class="weather_time_list">
+      <div class="scroll_wrap">
+        <ul class="weather_time_list">
         <li v-for="(item, idx) in getToday" v-bind:key="idx">
           <p class="time">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</p>
           <!-- <span class="day1">{{item.times}} 시</span> -->
@@ -12,22 +13,26 @@
           <p class="temp">{{Math.floor(item.main.temp - 272)}}℃</p>
         </li>
       </ul>
+      </div>
     </div>
     <div class="future_section">
       <h2 class="tit">내일({{this.$store.state.tomorrow[0].weekInfo}})</h2>
-      <ul class="weather_time_list">
+      <div class="scroll_wrap">
+        <ul class="weather_time_list">
         <li v-for="(item, idx) in getTomorrow" v-bind:key="idx">
           <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
           <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
           <p>{{item.weather[0].main}}</p>
           <p>{{Math.floor(item.main.temp - 272)}}℃</p>
         </li>
-        <p>{{this.$store.state.futureCity.name}}</p>
+        <!-- <p>{{this.$store.state.futureCity.name}}</p> -->
       </ul>
+      </div>
     </div>
     <div class="future_section">
       <h2>모레({{this.$store.state.ttomorrow[0].weekInfo}})</h2>
-      <ul class="weather_time_list">
+      <div class="scroll_wrap">
+        <ul class="weather_time_list">
         <li v-for="(item, idx) in this.$store.state.ttomorrow" v-bind:key="idx">
           <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
           <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
@@ -35,22 +40,13 @@
           <p>{{Math.floor(item.main.temp - 272)}}℃</p>
         </li>
       </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data (){
-    return {
-      // arr : '',
-      // result : '',
-      // today : [],
-      // tomorrow : [],
-      // ttomorrow : [],
-      // tttomorrow : []
-    }
-  },
   created(){
     this.forcastApi()
       .then(() => {
@@ -59,9 +55,6 @@ export default {
         console.log(this.$store.state.tomorrow)
         console.log(this.$store.state.ttomorrow)
       })
-  },
-  mounted(){
-    
   },
   computed : {
     getToday(){
@@ -84,55 +77,20 @@ export default {
     },
     slideDay(){
       this.$store.commit('SLIDE_DAY', this.$store.state.arr)
-    },
-    // slideDay(){
-    //   const today = new Date().getDate()
-    //   const tomorrow = today + 1
-    //   const ttomorrow = today + 2
-    //   const tttomorrow = today + 3
-    //   console.log(today)
-    //   console.log(tomorrow)
-    //   console.log(ttomorrow)
-    //   console.log(tttomorrow)
-    //   const week = ['일','월','화','수','목','금','토']
-    //   this.$store.state.arr.forEach((el, idx) => {
-    //       let day = el.dt_txt.split(' ')[0]
-    //       let dayInfo = new Date(day).getDate()
-    //       let weekInfo = week[new Date(day).getDay()]
-    //       let times = el.dt_txt.split(' ')[1].split(':')[0]
-    //       // console.log(day)
-    //       if(dayInfo === today){
-    //         this.$store.state.today.push(el)
-    //         this.$store.state.today[0]['times'] = times
-    //         this.$store.state.today[0]['weekInfo'] = weekInfo
-    //       } else if (dayInfo == tomorrow){
-    //         this.$store.state.tomorrow.push(el)
-    //         // this.tomorrow[0]['times'] = times
-    //         this.$store.state.tomorrow[0]['weekInfo'] = weekInfo
-    //       } else if (dayInfo == ttomorrow){
-    //         this.$store.state.ttomorrow.push(el)
-    //         // this.ttomorrow[0]['times'] = times
-    //         this.$store.state.ttomorrow[0]['weekInfo'] = weekInfo
-    //       } else if (dayInfo == tttomorrow){
-    //         this.$store.state.tttomorrow.push(el)
-    //         // this.tttomorrow[0]['times'] = times
-    //         this.$store.state.tttomorrow[0]['weekInfo'] = weekInfo
-    //       }
-    //     })
-    // },
-    addSetter(){
-      this.forcastApi().then(()=> {
-        this.$store.state.weekDay = "1"
-      })
-      
     }
   },
 }
 </script>
 
 <style>
-  .future_wrap{background-color:burlywood;text-align: center}
-  .future_section h2{font-size:18px;font-weight:600;background-color: rgb(240, 225, 158)}
-  .weather_time_list{overflow: hidden;display: inline-block;}
+  .future_wrap{background-color:#0070d3;text-align: center;}
+  .future_section h2{font-size:18px;font-weight:600;background-color:rgba(0,0,0,0.15);color:#fff;display: block; padding:6px 0;margin: 0}
+  .weather_time_list{overflow: hidden;display: inline-block;padding: 15px 0;}
   .weather_time_list li{float: left;}
+  .weather_time_list li *{color:#fff}
+  @media screen and (max-width:500px) {
+    .scroll_wrap{overflow: scroll}
+    .weather_time_list{width: 500px;overflow: scroll;margin: 0 auto}
+    .weather_time_list li{float: none;display: inline-block;vertical-align: middle}
+  }
 </style>
