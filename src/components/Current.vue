@@ -15,7 +15,7 @@
 
     <Modal v-if="showModal" @close="showModal = false">
       <h3 slot="header">
-        지역변경
+        City Change
       </h3>
       <div slot="body" class="cityList">
         <a href="" @click.prevent="changeCH" data-city="chile">chile</a>
@@ -122,4 +122,6 @@ export default {
   .weather_icon{font-size: 70px}
   .city_change{display: inline-block;padding:5px 10px;border: 1px solid #fff;color:#fff}
   .cityList a{color:#000}
+  .modal-body a{display: inline-block;padding:2px 6px;background-color:#047dec;color:#fff}
+  .city_close{color: #047dec}
 </style>

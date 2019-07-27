@@ -58,13 +58,14 @@
 }
 .modal-header h3 {
   margin-top: 0;
-  color: #42b983;
+  color:#047dec;
 }
 .modal-body {
   margin: 20px 0;
 }
 .modal-default-button {
   float: right;
+  color:#047dec
 }
 /*
  * The following styles are auto-applied to elements with
