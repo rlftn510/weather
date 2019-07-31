@@ -30,6 +30,9 @@ export const store = new Vuex.Store({
     },
     GET_TOMORROW(state){
       return state.tomorrow
+    },
+    GET_TTOMORROW(state){
+      return state.ttomorrow
     }
   },
   mutations: {
@@ -41,9 +44,21 @@ export const store = new Vuex.Store({
       state.ttomorrow = []
       state.tttomorrow = []
       const today = new Date().getDate()
-      const tomorrow = today + 1
-      const ttomorrow = today + 2
-      const tttomorrow = today + 3
+
+      let tomorrow,
+      ttomorrow,
+      tttomorrow
+
+      if(today == 31){
+        tomorrow = 1
+        ttomorrow = 2
+        tttomorrow = 3
+      } else {
+        tomorrow = today + 1
+        ttomorrow = today + 2
+        tttomorrow = today + 3
+      }
+      
 
       const week = ['일','월','화','수','목','금','토']
       state.arr.forEach((el, idx) => {
@@ -51,6 +66,7 @@ export const store = new Vuex.Store({
           let dayInfo = new Date(day).getDate()
           let weekInfo = week[new Date(day).getDay()]
           let times = el.dt_txt.split(' ')[1].split(':')[0]
+          
           if(dayInfo === today){
             state.today.push(el)
             state.today[0]['times'] = times

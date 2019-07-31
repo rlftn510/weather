@@ -18,9 +18,13 @@
         City Change
       </h3>
       <div slot="body" class="cityList">
-        <a href="" @click.prevent="changeCH" data-city="chile">chile</a>
         <a href="" @click.prevent="changeCH" data-city="seoul">seoul</a>
-        <a href="" @click.prevent="changeCH" data-city="london">london</a>
+        <a href="" @click.prevent="changeCH" data-city="jeju">jeju</a>
+        <a href="" @click.prevent="changeCH" data-city="chuncheon">chuncheon</a>
+        <a href="" @click.prevent="changeCH" data-city="london">London</a>
+        <a href="" @click.prevent="changeCH" data-city="roma">Roma</a>
+        <a href="" @click.prevent="changeCH" data-city="paris">Paris</a>
+        <a href="" @click.prevent="changeCH" data-city="Vienna">Vienna</a>
       </div>
       <div slot="footer">
         <i class="fas closeModalBtn fa-times city_close" @click="closePop"></i>
@@ -119,6 +123,6 @@ export default {
   .weather_icon{font-size: 70px}
   .city_change{display: inline-block;padding:5px 10px;border: 1px solid #fff;color:#fff}
   .cityList a{color:#000}
-  .modal-body a{display: inline-block;padding:2px 6px;background-color:#047dec;color:#fff}
+  .modal-body a{display: inline-block;padding:2px 6px;background-color:#047dec;color:#fff;margin: 2px}
   .city_close{color: #047dec}
 </style>

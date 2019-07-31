@@ -2,7 +2,7 @@
   <div class="future_wrap">
     <!-- 미래 -->
     <div class="future_section">
-      <h2 class="tit">오늘({{this.$store.state.today[0].weekInfo}})</h2>
+      <h2 class="tit">오늘({{getTodayWeek}})</h2>
       <div class="scroll_wrap">
         <ul class="weather_time_list">
         <li v-for="(item, idx) in getToday" v-bind:key="idx">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="future_section">
-      <h2 class="tit">내일({{this.$store.state.tomorrow[0].weekInfo}})</h2>
+      <h2 class="tit">내일({{getTomorrowWeek}})</h2>
       <div class="scroll_wrap">
         <ul class="weather_time_list">
         <li v-for="(item, idx) in getTomorrow" v-bind:key="idx">
@@ -28,10 +28,10 @@
       </div>
     </div>
     <div class="future_section">
-      <h2>모레({{this.$store.state.ttomorrow[0].weekInfo}})</h2>
+      <h2>모레({{getTtomorrowWeek}})</h2>
       <div class="scroll_wrap">
         <ul class="weather_time_list">
-        <li v-for="(item, idx) in this.$store.state.ttomorrow" v-bind:key="idx">
+        <li v-for="(item, idx) in getTtomorrow" v-bind:key="idx">
           <span class="day1">{{item.dt_txt.split(' ')[1].split(':')[0]}} 시</span>
           <p><img v-bind:src="'http://openweathermap.org/img/w/'+item.weather[0].icon+'.png'"></p>
           <p>{{item.weather[0].main}}</p>
@@ -55,9 +55,27 @@ export default {
     getToday(){
       return this.$store.getters.GET_TODAY
     },
+    getTodayWeek() {
+      if(this.$store.state.today[0] !== undefined) {
+        return this.$store.state.today[0].weekInfo
+      }
+    },
     getTomorrow(){
       return this.$store.getters.GET_TOMORROW
-    }
+    },
+    getTomorrowWeek() {
+      if(this.$store.state.tomorrow[0] !== undefined) {
+        return this.$store.state.tomorrow[0].weekInfo
+      }
+    },
+    getTtomorrow(){
+      return this.$store.getters.GET_TOMORROW
+    },
+    getTtomorrowWeek() {
+      if(this.$store.state.ttomorrow[0] !== undefined) {
+        return this.$store.state.ttomorrow[0].weekInfo
+      }
+    },
   },
   methods: {
     forcastApi : async function() {
@@ -82,6 +100,7 @@ export default {
   .weather_time_list{overflow: hidden;display: inline-block;padding: 15px 0;}
   .weather_time_list li{float: left;}
   .weather_time_list li *{color:#fff}
+  .weather_time_list p{margin:0;}
   @media screen and (max-width:500px) {
     .scroll_wrap{overflow: scroll}
     .weather_time_list{width: 500px;overflow: scroll;margin: 0 auto}
