@@ -43,23 +43,13 @@ export const store = new Vuex.Store({
       state.tomorrow = []
       state.ttomorrow = []
       state.tttomorrow = []
-      const today = new Date().getDate()
-
-      let tomorrow,
-      ttomorrow,
-      tttomorrow
-
-      if(today == 31){
-        tomorrow = 1
-        ttomorrow = 2
-        tttomorrow = 3
-      } else {
-        tomorrow = today + 1
-        ttomorrow = today + 2
-        tttomorrow = today + 3
-      }
+      let today = new Date()
       
-
+      let tomorrow = new Date(today.valueOf() + (24*60*60*1000) * 1).getDate()
+      let ttomorrow = new Date(today.valueOf() + (24*60*60*1000) * 2).getDate()
+      let tttomorrow = new Date(today.valueOf() + (24*60*60*1000) * 3).getDate()
+      
+      today = new Date().getDate()
       const week = ['일','월','화','수','목','금','토']
       state.arr.forEach((el, idx) => {
           let day = el.dt_txt.split(' ')[0]
